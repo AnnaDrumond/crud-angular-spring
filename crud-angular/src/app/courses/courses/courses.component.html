@@ -1,0 +1,50 @@
+<mat-card>
+
+  <mat-toolbar color="primary"> Cursos disponívies </mat-toolbar>
+
+  <!-- vou usar o pipe | async para fazer o subscribe e ver se há dados, depois fará também o unsubscribe
+  quando não for usar mais o componente - o "as" é um alias/alcunha -->
+  <div *ngIf="courses$ | async as courses ; else loading">
+    <!-- O dataSource pode ser uma lista ou um Observable, pois o Angular Material sabe como lidar -->
+    <!-- Se fosse uma tabela feita com ngFor poderia usar [dataSource]="courses | async" este "| async" é um pipe
+  que irá fazer automaticamente o subscribe -->
+    <table mat-table [dataSource]="courses" class="mat-elevation-z8">
+      <!-- O <ng-container>permite usar diretivas estruturais sem nenhum elemento extra, garantindo que
+     as únicas alterações do DOM aplicadas sejam aquelas ditadas pelas próprias diretivas. -->
+
+      <!-- Course Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Curso</th>
+        <!-- Abaixo poderia usar um ng for -->
+        <td mat-cell *matCellDef="let course">{{ course.name }}</td>
+      </ng-container>
+
+
+
+      <!-- Category Column -->
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef>Categoria</th>
+        <!-- Abaixo poderia usar um ng for -->
+        <td mat-cell *matCellDef="let course">{{ course.category }}
+          <!-- Chamamos o pipe para definir qual icone que iremos exibir -->
+          <mat-icon aria-hidden="false" aria-label="Categoria do Curso">{{course.category | categoryPipe}}</mat-icon>
+        </td>
+      </ng-container>
+
+      <!-- especificar colunas que serão exibidas -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <!-- Aqui ocorre a iteração de cada coluna
+      para cada registro vamos mostrar as colunas especificadas em displayedColumns declarado no .ts-->
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+
+  <!-- No ngTemplate entra o código que quero correr no "else" -->
+  <ng-template #loading>
+    <div class="loading-spinner">
+      <!-- animaçao de loading -->
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
+
+</mat-card>
