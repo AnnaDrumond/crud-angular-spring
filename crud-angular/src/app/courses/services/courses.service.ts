@@ -22,7 +22,8 @@ que é o equivalente ao then de uma promise ou ao $watch.*/
 export class CoursesService {
 
   //o readonly impede modificações
-  private readonly API = 'assets/coursesTestDb.json';
+  //Não preciso informar o localhost:8080/ pois tenho isso no ficheiro  proxy.configure.js
+  private readonly API = 'api/courses/';
 
   // injetar dependencia do httpClient
   //Preciso de uma instancia de httpClient
@@ -37,7 +38,7 @@ export class CoursesService {
     //chamada AJAX/chamada assincrona com o backend/servidor
     //O pipe(cano) - a ideia é que antes de retornar a informação final, eu posso manipular esta informação
     //usando programação reativa, onde faço uso de operadores RXJS (ex: tap, take, first) para manipular estes dados
-    return this.httpClient.get<Course[]>(this.API)
+    return this.httpClient.get<Course[]>(this.API + 'list')
       .pipe(
         //Não preciso/quero manter a conexão então posso usar este first ou take(1)- assim qe eu tiver a resposta finalizo a conexão
         first(),

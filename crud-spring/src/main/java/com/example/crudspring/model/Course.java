@@ -1,6 +1,7 @@
 package com.example.crudspring.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,6 +17,9 @@ import java.util.Objects;
 public class Course {
     @Id//indica que é a pk
     @GeneratedValue(strategy = GenerationType.IDENTITY)//gerar pk de forma automatica e sequencial
+    //Informar o nome que este atributo terá após o marshelling para Json
+    //Neste caso, coloquei o nome respetivo a este atributo na minha interface course do Angular
+    @JsonProperty("_id")
     private Long id;
 
     @Column(length = 200, nullable = false)

@@ -4,6 +4,7 @@ import com.example.crudspring.model.Course;
 import com.example.crudspring.repository.CourseRepository;
 import lombok.AllArgsConstructor;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,7 @@ public class CoursesController {
     //è final para garantir que não será modificado a instância - boa prática
     private final CourseRepository courseRepository;
 
+    @CrossOrigin
     @GetMapping("/list")
     // OU ->  @RequestMapping(method = RequestMethod.GET)
     public List<Course> getCoursesList(){

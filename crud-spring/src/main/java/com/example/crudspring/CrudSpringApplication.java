@@ -19,11 +19,19 @@ public class CrudSpringApplication {
     //CommandLineRunner é executado logo assim que app começa a correr
     CommandLineRunner initFakeDataBase(CourseRepository courseRepository){
         return args -> {
+
             courseRepository.deleteAll();
+
             Course course = new Course();
             course.setName("Angular com Spring");
             course.setCategory("front-end");
             courseRepository.save(course);
+
+            Course course2 = new Course();
+            course2.setName("Angular com Spring 2");
+            course2.setCategory("back-end");
+            courseRepository.save(course2);
+
         };
     }
 
