@@ -1,0 +1,16 @@
+.full-width{
+  width: 100%,;
+}
+
+mat-card{
+  //limitar a largura da tela do form
+  max-width: 80%;
+  // 2x a margem padrão
+  margin: 2em auto;
+  text-align: center;;
+}
+
+.min-width{
+  width: 100%;
+  min-width: 150px;
+}

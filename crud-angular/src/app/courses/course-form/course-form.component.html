@@ -1,0 +1,29 @@
+<mat-card>
+  <mat-toolbar color="primary">Criar Curso</mat-toolbar>
+  <mat-card-content>
+    <!-- Usar a diretiva "formGroup" para ligar este formulário a variável "form" do ficheiro .ts -->
+    <form [formGroup]="form">
+      <mat-form-field class="full-width">
+        <!-- Falta associar este campo ao "name" definido no objeto no .ts, através de "formControlName" -->
+        <input matInput placeholder="Nome do curso" formControlName="name">
+      </mat-form-field>
+
+      <!--  -->
+      <mat-form-field class="full-width">
+        <mat-label>Categoria do curso</mat-label>
+        <!-- Falta associar este campo ao "name" definido no objeto no .ts, através de "formControlName" -->
+        <mat-select formControlName="category">
+          <!-- caso o user queira deixar sem nada selecionado -->
+          <mat-option value="null"> </mat-option>
+          <mat-option value="front-end">Front-End</mat-option>
+          <mat-option value="back-end">Back-End</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="onSubmit()">SALVAR</button>
+    <button mat-raised-button color="warn" (click)="onCancel()">CANCELAR</button>
+  </mat-card-actions>
+</mat-card>

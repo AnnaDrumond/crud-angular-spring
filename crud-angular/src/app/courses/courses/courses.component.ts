@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
@@ -20,12 +21,14 @@ export class CoursesComponent implements OnInit {
   //Quando coloco o $ ao final, demonstra que é um observable
   courses$: Observable<Course[]>;
   //Definição das colunas da tabela do AngularMaterial
-  displayedColumns = ['name', 'category'];
+  displayedColumns = ['name', 'category','actions'];
 
   //Precisamos injetar a dependencia do course.service para poder chamar/usar seus métodos
   constructor(
     private coursesService: CoursesService,
-    public matDialog: MatDialog) {
+    public matDialog: MatDialog,
+    private router:Router,
+    private route: ActivatedRoute) {
     //poderia ser também:
     //this.coursesServices = new CoursesService(); - neste caso eu precisaria declarar esta variavel fora do construtor
     this.courses$ = this.coursesService.getCoursesListService()
@@ -48,6 +51,12 @@ export class CoursesComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  onAddCourse(): void {
+    console.log("clickkkkk");
+    //relativeTo faz referencia a rota atual
+    this.router.navigate(['new'], {relativeTo: this.route});
+  }
 
 }
 

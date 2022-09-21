@@ -10,8 +10,10 @@ const routes: Routes = [
     //usar o nome que quiser
     path: 'courses',
     //Ou seja, quando carregar http://localhost:4200 vai redirecionar para http://localhost:4200/courses
-    // e então serão exibidos tudo que estiver em coursesmodule
+    // e seus subsequentes "paths" então serão exibidos tudo que estiver em coursesmodule, bem como ações e paths
+    // a partir de http://localhost:4200/courses que estão definidos em courses-routing.module.ts
     //no import está o caminho para o modulo filho
+    //Lazyloading - carregamento por demanda
     loadChildren: () => import('./courses/courses.module').then(module => module.CourseModule)
   }
 

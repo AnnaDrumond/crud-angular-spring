@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-
 import { Course } from '../model/course';
 // este abaixo também é para usarmos requisições http
 //https://dev.to/felipedsc/observables-como-funcionam-15eb
@@ -17,20 +16,16 @@ que é o equivalente ao then de uma promise ou ao $watch.*/
 //Vai fazer parte da injeção de independencia
 @Injectable({
   // a instancia desta classe será fornecida na raiz do projeto (escopo global)
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CoursesService {
-
   //o readonly impede modificações
   //Não preciso informar o localhost:8080/ pois tenho isso no ficheiro  proxy.configure.js
   private readonly API = 'api/courses/';
 
   // injetar dependencia do httpClient
   //Preciso de uma instancia de httpClient
-  constructor(private httpClient: HttpClient) {
-
-  }
-
+  constructor(private httpClient: HttpClient) {}
 
   //declarar o método que vai retornar a lista de cursos do tipo Course (interface) para o componente
   // para podermos refatorar esta lista
@@ -38,12 +33,28 @@ export class CoursesService {
     //chamada AJAX/chamada assincrona com o backend/servidor
     //O pipe(cano) - a ideia é que antes de retornar a informação final, eu posso manipular esta informação
     //usando programação reativa, onde faço uso de operadores RXJS (ex: tap, take, first) para manipular estes dados
-    return this.httpClient.get<Course[]>(this.API + 'list')
-      .pipe(
+    return this.httpClient.get<Course[]>(this.API + 'list').pipe(
+      //Não preciso/quero manter a conexão então posso usar este first ou take(1)- assim qe eu tiver a resposta finalizo a conexão
+      first(),
+      //por agora no exemplo estou apenas imprimindo para ver se veio tudo certinho
+      tap((courses) => console.log(courses))
+    );
+  }
+
+  //enviar ao backend o curso para salva na bd
+  // no caso recebe como parametro uma interface course
+  saveCourse(course: Course): Observable<Course> {
+    console.log('saveCourse', course);
+    //parametros (path, body)
+    return (
+      this.httpClient
+        .post<Course>(this.API + 'create', course)
         //Não preciso/quero manter a conexão então posso usar este first ou take(1)- assim qe eu tiver a resposta finalizo a conexão
-        first(),
-        //por agora no exemplo estou apenas imprimindo para ver se veio tudo certinho
-        tap(courses => console.log(courses))
-      );
+        .pipe(first())
+      /**O first( ) é um método do rxjs e serve pra você pegar apenas o primeiro retorno que vai vir do back end.
+       * No caso de vc receber um streaming de dados, ele pegaria só o primeiro.
+       * Aqui não faz diferença alguma, mas ele está sendo usado porque ele fecha a conexão depois de receber
+       * os dados. Então ele está servindo pra isso: fechar a conexão. */
+    );
   }
 }

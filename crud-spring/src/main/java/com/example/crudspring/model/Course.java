@@ -30,6 +30,7 @@ public class Course {
     @Setter  @NonNull
     private String category;
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

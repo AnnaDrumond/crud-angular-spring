@@ -31,6 +31,33 @@
         </td>
       </ng-container>
 
+      <!-- Actions Columns -->
+      <ng-container matColumnDef="actions">
+        <!-- buttons -->
+        <!-- para poder ter mais flexibilidade na manipulação, não uso o th e td e sim
+        o mat-header-cell e o mat-cell -->
+        <!-- cabeçalho da coluna - na coluna de categoria seria o "th"-->
+        <mat-header-cell *matHeaderCellDef="">
+          <button mat-fab color="accent" aria-label="Add course">
+            <mat-icon (click)="onAddCourse()">add</mat-icon>
+            <!-- A ideia é quando clicar aqui, o user ser redirecionado ao couse-form -->
+            <!-- no método temos:this.router.navigate(['new']); ou seja, mudar o user de rota^`c -->
+          </button>
+        </mat-header-cell>
+
+        <!-- corpo da coluna (seria o "td") - não poss ter cabeçalho sem o corpo pois dá erro -->
+        <!-- para CADA registro(course) da minha coleção deve fazer o que está aqui determinado -->
+        <mat-cell  *matCellDef="let course">
+          <button  mat-icon-button style="color:blue" aria-label="Edit course">
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <button  mat-icon-button color="warn" aria-label="Remove course">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
       <!-- especificar colunas que serão exibidas -->
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <!-- Aqui ocorre a iteração de cada coluna

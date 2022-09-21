@@ -19,7 +19,7 @@ public class CrudSpringApplication {
     //CommandLineRunner é executado logo assim que app começa a correr
     CommandLineRunner initFakeDataBase(CourseRepository courseRepository){
         return args -> {
-
+        // Isso é apenas para colocar dados hardcoded no banco H2 para testes
             courseRepository.deleteAll();
 
             Course course = new Course();
